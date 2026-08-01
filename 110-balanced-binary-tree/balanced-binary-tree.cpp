@@ -1,21 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
-    int height(TreeNode* root) {
-        if (root == NULL) return 0; // Return 0 for empty nodes
-        
-        int ll = height(root->left);
-        if (ll == -1) return -1; // Propagate left subtree imbalance
-        
-        int rr = height(root->right);
-        if (rr == -1) return -1; // Propagate right subtree imbalance
-        
-        // Check current node balance
-        if (abs(ll - rr) > 1) return -1;
-        
-        return 1 + max(ll, rr);
+    int height(TreeNode* root, bool &valid){
+        if(root == nullptr)
+        return 0;
+
+
+        int left = height(root->left, valid);
+        int right = height(root->right, valid);
+
+        if(abs(left-right) > 1)
+        return valid = 0;
+
+        return 1+ max(left, right);
     }
 
+
     bool isBalanced(TreeNode* root) {
-        return height(root) != -1;
+        bool valid = 1;
+
+        height(root, valid);
+        return valid;
     }
 };
