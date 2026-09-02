@@ -1,18 +1,22 @@
 class Solution {
 public:
     bool canJump(vector<int>& nums) {
-        int is_reachable = 0;
-        
-        for(int i = 0; i<nums.size(); i++){
-            if(i> is_reachable){
+        int farthest = 0;
+
+        for (int i = 0; i < nums.size(); i++) {
+
+            // Current index is unreachable
+            if (i > farthest)
                 return false;
-            }else{
-                int expect = i+ nums[i];
 
-               is_reachable=  max(is_reachable,expect);
-            }
+            // Update maximum reachable index
+            farthest = max(farthest, i + nums[i]);
+
+            // Already reached the last index
+            if (farthest >= nums.size() - 1)
+                return true;
         }
-        return true;
 
+        return true;
     }
 };
