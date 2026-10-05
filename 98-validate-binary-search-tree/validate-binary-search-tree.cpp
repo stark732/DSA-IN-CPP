@@ -11,29 +11,26 @@
  */
 class Solution {
 public:
-    bool inorder(TreeNode* root,long long &previous){
-        if(!root){
-            return 1;
+    bool inorder(TreeNode* node, long long & previous){
+        if(node == NULL)
+            return true;
+        
+        
+        if(!inorder(node->left, previous)){
+            return false;
         }
 
-        if(!inorder(root->left, previous)){
-            return 0;
-        }
-
-        if(root->val <= previous)
-        return 0;
-
-        previous = root->val;
-
-        return inorder(root->right, previous);
+        if(node->val <= previous)
+            return false;
+        
+        previous = node->val;
+        
+        return inorder(node -> right, previous);
     }
 
-
     bool isValidBST(TreeNode* root) {
-
         long long previous = LLONG_MIN;
 
-        return inorder (root, previous);
-        
+        return inorder(root, previous);
     }
 };
